@@ -24,7 +24,7 @@ namespace AirlineWeb.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{secret}",Name = "GetSubscriptionBySecret")]
         public ActionResult<WebhookSubscriptionReadDto> GetSubscriptionBySecret(string secret)
         {
             var subscription = _context.WebhookSubscriptions.FirstOrDefault(f=>f.Secret == secret);
@@ -56,7 +56,7 @@ namespace AirlineWeb.Controllers
                 }
 
                 var  webhookSubscriptionReadDto = _mapper.Map<WebhookSubscriptionReadDto>(subscription);
-                return CreatedAtRoute(nameof(GetSubscriptionBySecret),new {secret = webhookSubscriptionReadDto.Secret},webhookSubscriptionReadDto);
+                return CreatedAtRoute( nameof(GetSubscriptionBySecret),new {secret = webhookSubscriptionReadDto.Secret},webhookSubscriptionReadDto);
             }
             else{
                 return NoContent();
